@@ -182,8 +182,10 @@ and discard rows only as a last resort:
   `Order ID` becomes `Order_ID` and `Unit Price` becomes `Unit_Price`.
 - Empty values in the `Discount` column are replaced with `0` so that the
   column can be used safely by `add_virtual_column`.
-- There are eb empty rows in the `Unit Price` column. Under the current cleaning strategy these
+- There are empty rows in the `Unit Price` column. Under the current cleaning strategy these
 empty numeric values are converted to `0`, rather than causing the rows to be
 discarded. This is an explicit consequence of treating missing numeric values
 as zero and should be considered when interpreting the calculated revenue.
+- Not rounding data before conversion caused floating-point and precision errors, 
+so all numerical values in `prepare_numeric_columns` are now explicitly rounded to 2 decimal places.
 
